@@ -1,0 +1,32 @@
+- name: Install LAMP Packages
+  become: yes
+  apt:
+    update_cache: yes
+    state: present
+    name:
+      - acl
+      - apache2
+      - mysql-server
+      - python3-pymysql
+      - php
+      - php-mysql
+      - libapache2-mod-php
+  tags: [ system ]
+
+- name: Install PHP Extensions
+  become: yes
+  apt:
+    name: {{ item }}
+    update_cache: yes
+    state: latest
+  loop: "{{ php_modules }}"
+  tags: [ system ]
+
+# UFW Configuration
+- name: "UFW - Allow HTTP on port {{ http_port }}"
+  become: yes
+  ufw:
+    rule: allow
+    port: "{{ http_port }}"
+    proto: tcp
+  tags: [ system ]

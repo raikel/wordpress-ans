@@ -1,0 +1,4 @@
+- include: 01_system.yml
+- include: 02_apache.yml
+- include: 03_mysql.yml
+- include: 04_wordpress.yml
